@@ -11,17 +11,18 @@ use App\Models\BuyResponse;
 use App\Models\Currency;
 use App\Models\Message;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Http\Response;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Auth;
+use function response;
 
 class BuyResponseController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return AnonymousResourceCollection
      */
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
         return BuyResponseResponse::collection(BuyResponse::all());
     }
@@ -32,7 +33,7 @@ class BuyResponseController extends Controller
      * @param StoreBuyResponseRequest $request
      * @return BuyResponseResponse
      */
-    public function store(StoreBuyResponseRequest $request)
+    public function store(StoreBuyResponseRequest $request): BuyResponseResponse
     {
         $data = [];
 
@@ -51,7 +52,7 @@ class BuyResponseController extends Controller
 
         if ($request->price) {
             if (!$buyRequest->is_auction) {
-                throw new HttpResponseException(\response([
+                throw new HttpResponseException(response([
                     "message" => "Попытка установить цену на фикс. сделке"
                 ], 422));
             } else {
@@ -62,16 +63,16 @@ class BuyResponseController extends Controller
                 $lowestPrice = $cheapest?->price * $cheapest?->currency()?->first()?->rubs;
 
                 if ($requestPrice >= $originalPrice) {
-                    throw new HttpResponseException(\response([
+                    throw new HttpResponseException(response([
                         "message" => "Попытка установить цену выше начальной",
                     ], 422));
                 }
 
                 if ($lowestPrice && $requestPrice >= $lowestPrice) {
-                    throw new HttpResponseException(\response([
+                    throw new HttpResponseException(response([
                         "message" => "Попытка установить цену выше текущей минимальной",
                         "minimal" => $lowestPrice,
-                        "requestes" => $requestPrice
+                        "requestes" => $requestPrice //Todo: переименовать в requested
                     ], 422));
                 }
 
@@ -115,9 +116,9 @@ class BuyResponseController extends Controller
      * Display the specified resource.
      *
      * @param BuyResponse $buyResponse
-     * @return Response
+     * @return void
      */
-    public function show(BuyResponse $buyResponse)
+    public function show(BuyResponse $buyResponse): void
     {
         //
     }
@@ -127,9 +128,9 @@ class BuyResponseController extends Controller
      *
      * @param UpdateBuyResponseRequest $request
      * @param BuyResponse $buyResponse
-     * @return Response
+     * @return void
      */
-    public function update(UpdateBuyResponseRequest $request, BuyResponse $buyResponse)
+    public function update(UpdateBuyResponseRequest $request, BuyResponse $buyResponse): void
     {
         //
     }
@@ -138,15 +139,15 @@ class BuyResponseController extends Controller
      * Remove the specified resource from storage.
      *
      * @param BuyResponse $buyResponse
-     * @return Response
+     * @return void
      */
-    public function destroy(BuyResponse $buyResponse)
+    public function destroy(BuyResponse $buyResponse): void
     {
         //
     }
 
 
-    public function changeStatus(ApiRequest $request, BuyResponse $buyResponse)
+    public function changeStatus(ApiRequest $request, BuyResponse $buyResponse): BuyResponse
     {
         $buyResponse->buy_response_status_id = $request->status_id;
 

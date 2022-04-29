@@ -5,7 +5,6 @@ namespace App\Http\Requests;
 use App\Models\Currency;
 use App\Models\PaymentMethod;
 use App\Models\ProductionType;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class UpdateBuyRequestRequest extends ApiRequest
@@ -15,7 +14,7 @@ class UpdateBuyRequestRequest extends ApiRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -25,7 +24,7 @@ class UpdateBuyRequestRequest extends ApiRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             "name" => "",

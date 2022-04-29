@@ -1,9 +1,8 @@
-<?php
+<?php /** @noinspection PhpArrayShapeAttributeCanBeAddedInspection */
 
 namespace App\Http\Requests;
 
 use App\Models\User;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class UserRegisterRequest extends ApiRequest
@@ -13,7 +12,7 @@ class UserRegisterRequest extends ApiRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -23,7 +22,7 @@ class UserRegisterRequest extends ApiRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             "login" => Rule::unique(User::class),

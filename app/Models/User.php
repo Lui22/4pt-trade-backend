@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -15,7 +14,7 @@ class User extends Authenticatable
 
     protected $guarded = [];
 
-    public function generateToken()
+    public function generateToken(): \Ramsey\Uuid\UuidInterface
     {
         $this->api_token = Str::uuid();
         $this->save();
@@ -23,12 +22,12 @@ class User extends Authenticatable
         return $this->api_token;
     }
 
-    public function role()
+    public function role(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(UserRole::class, 'id', 'user_role_id');
     }
 
-    public function messages()
+    public function messages(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Message::class);
     }

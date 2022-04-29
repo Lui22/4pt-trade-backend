@@ -15,37 +15,37 @@ class BuyResponse extends Model
         "supply_at" => "datetime",
     ];
 
-    public function currency()
+    public function currency(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Currency::class);
     }
 
-    public function production_type()
+    public function production_type(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(ProductionType::class);
     }
 
-    public function payment_method()
+    public function payment_method(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(PaymentMethod::class);
     }
 
-    public function user()
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function documents()
+    public function documents(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(BuyResponseDocument::class);
     }
 
-    public function buy_request()
+    public function buy_request(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(BuyRequest::class);
     }
 
-    public function status()
+    public function status(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(BuyResponseStatus::class, 'buy_response_status_id', 'id');
     }

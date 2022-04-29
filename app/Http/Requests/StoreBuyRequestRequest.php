@@ -14,7 +14,7 @@ class StoreBuyRequestRequest extends ApiRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -24,7 +24,7 @@ class StoreBuyRequestRequest extends ApiRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             "name" => "required",

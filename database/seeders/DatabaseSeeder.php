@@ -2,12 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\BuyResponse;
 use App\Models\BuyResponseStatus;
 use App\Models\Currency;
 use App\Models\PaymentMethod;
 use App\Models\UserRole;
-use Database\Factories\BuyResponseStatusFactory;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 
@@ -18,7 +16,7 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         UserRole::factory()->count(2)->state(
             new Sequence(

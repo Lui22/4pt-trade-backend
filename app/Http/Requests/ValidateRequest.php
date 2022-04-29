@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpArrayShapeAttributeCanBeAddedInspection */
 
 namespace App\Http\Requests;
 
@@ -12,7 +12,7 @@ class ValidateRequest extends ApiRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -22,7 +22,7 @@ class ValidateRequest extends ApiRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             "login" => [

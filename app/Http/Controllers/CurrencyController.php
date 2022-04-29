@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\CurrencyListResponse;
 use App\Models\Currency;
-use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class CurrencyController extends Controller
 {
-    public function list()
+    public function list(): AnonymousResourceCollection
     {
         return CurrencyListResponse::collection(Currency::all());
     }

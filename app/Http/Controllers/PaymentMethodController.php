@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\PaymentMethod;
-use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Collection;
 
 class PaymentMethodController extends Controller
 {
-    public function list()
+    public function list(): Collection
     {
         return PaymentMethod::all('id', 'name');
     }

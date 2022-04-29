@@ -26,7 +26,7 @@ class BuyRequestController extends Controller
      *
      * @return AnonymousResourceCollection
      */
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
         $this->checkExpired();
 
@@ -39,7 +39,7 @@ class BuyRequestController extends Controller
      * @param StoreBuyRequestRequest $request
      * @return BuyRequestResponse
      */
-    public function store(StoreBuyRequestRequest $request)
+    public function store(StoreBuyRequestRequest $request): BuyRequestResponse
     {
         $data = [
             "user_id" => Auth::id(),
@@ -88,10 +88,10 @@ class BuyRequestController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param BuyRequest $buyRequest
+     * @param BuyRequest $request
      * @return BuyRequestShowResponse
      */
-    public function show(BuyRequest $request)
+    public function show(BuyRequest $request): BuyRequestShowResponse
     {
         return BuyRequestShowResponse::make($request);
     }
@@ -100,10 +100,10 @@ class BuyRequestController extends Controller
      * Update the specified resource in storage.
      *
      * @param UpdateBuyRequestRequest $updateBuyRequestRequest
-     * @param BuyRequest $buyRequest
+     * @param BuyRequest $request
      * @return BuyRequestResponse|Application|ResponseFactory|Response
      */
-    public function update(UpdateBuyRequestRequest $updateBuyRequestRequest, BuyRequest $request)
+    public function update(UpdateBuyRequestRequest $updateBuyRequestRequest, BuyRequest $request): Response|BuyRequestResponse|Application|ResponseFactory
     {
         if (($updateBuyRequestRequest->price || $updateBuyRequestRequest->currency_id) && $request->is_open) {
             return \response([
@@ -135,10 +135,10 @@ class BuyRequestController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param BuyRequest $buyRequest
+     * @param BuyRequest $request
      * @return Response
      */
-    public function destroy(BuyRequest $request)
+    public function destroy(BuyRequest $request): Response
     {
         if ($request->user() === Auth::user() && !$request->is_open) {
             $request->delete();
@@ -149,7 +149,7 @@ class BuyRequestController extends Controller
         ]);
     }
 
-    public function checkExpired()
+    public function checkExpired(): string
     {
         $requests = BuyRequest::where('is_open', true)->get();
         foreach ($requests as $request) {
@@ -167,7 +167,7 @@ class BuyRequestController extends Controller
         return "sosa";
     }
 
-    public function close(BuyRequest $request)
+    public function close(BuyRequest $request): Response|BuyRequest|Application|ResponseFactory
     {
         if (!$request->is_open) {
             return \response([
@@ -181,7 +181,7 @@ class BuyRequestController extends Controller
         return $request;
     }
 
-    public function open(BuyRequest $request)
+    public function open(BuyRequest $request): Response|BuyRequest|Application|ResponseFactory
     {
         if ($request->is_open) {
             return \response([
@@ -216,7 +216,7 @@ class BuyRequestController extends Controller
     public static function cheapestResponseByRequestId($id)
     {
         $sorted = BuyResponse::where('buy_request_id', $id)->get()
-            ->sortBy(function ($request, $key) {
+            ->sortBy(function ($request, $key) { //Todo: проверить, можно ли это убрать
                 return Currency::find($request->currency_id)->rubs * $request->price;
             });
 
@@ -229,7 +229,7 @@ class BuyRequestController extends Controller
         $buyRequest->save();
 
         BuyResponse::where('buy_request_id', $buyRequest->id)->get()
-            ->each(function ($item, $key) {
+            ->each(function ($item, $key) { //Todo: проверить, можно ли убрать $key
                 $item->buy_response_status_id = 1;
                 $item->save();
             });
@@ -237,6 +237,7 @@ class BuyRequestController extends Controller
         $wonResponse->buy_response_status_id = 2;
         $wonResponse->save();
 
-        BuyResponseNotificationController::notify($wonResponse->user_id);
+//        BuyResponseNotificationController::notify($wonResponse->user_id);
+//Todo: прикрутить RabbitMQ
     }
 }

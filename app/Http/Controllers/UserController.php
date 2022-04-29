@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function register(UserRegisterRequest $request)
+    public function register(UserRegisterRequest $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $data = $request->only(
             'firstname',
@@ -43,7 +43,7 @@ class UserController extends Controller
         ], 201);
     }
 
-    public function login(ApiRequest $request)
+    public function login(ApiRequest $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         if (!Auth::attempt($request->only('login', 'password'))) {
             return response([
@@ -58,7 +58,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function usersRequestsList()
+    public function usersRequestsList(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
         //Поставщик
         if (Auth::user()->role->id == 1) {
@@ -71,7 +71,7 @@ class UserController extends Controller
         }
     }
 
-    public function buyerRequestsActiveList()
+    public function buyerRequestsActiveList(): \Illuminate\Http\Response|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         if (Auth::user()->role->id != 2) {
             return response([
@@ -86,22 +86,22 @@ class UserController extends Controller
         return BuyRequestResponse::collection($list);
     }
 
-    public function suppliersList()
+    public function suppliersList(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
         return UserResponse::collection(User::where('user_role_id', 1)->get());
     }
 
-    public function purchasersList()
+    public function purchasersList(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
         return UserResponse::collection(User::where('user_role_id', 2)->get());
     }
 
-    public function info()
+    public function info(): UserResponse
     {
         return UserResponse::make(Auth::user());
     }
 
-    public function myWonResponses()
+    public function myWonResponses(): \Illuminate\Http\Response|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         if (Auth::user()->role->id != 1) {
             return response([

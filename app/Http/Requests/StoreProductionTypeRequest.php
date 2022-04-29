@@ -1,9 +1,8 @@
-<?php
+<?php /** @noinspection PhpArrayShapeAttributeCanBeAddedInspection */
 
 namespace App\Http\Requests;
 
 use App\Models\ProductionType;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class StoreProductionTypeRequest extends ApiRequest
@@ -13,7 +12,7 @@ class StoreProductionTypeRequest extends ApiRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -23,7 +22,7 @@ class StoreProductionTypeRequest extends ApiRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             "name" => Rule::unique(ProductionType::class)

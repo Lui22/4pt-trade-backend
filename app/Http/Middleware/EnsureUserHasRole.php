@@ -14,10 +14,11 @@ class EnsureUserHasRole
      * Handle an incoming request.
      *
      * @param Request $request
-     * @param Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
+     * @param Closure $next
+     * @param $roleName
      * @return Response|RedirectResponse
      */
-    public function handle(Request $request, Closure $next, $roleName)
+    public function handle(Request $request, Closure $next, $roleName): Response|RedirectResponse
     {
         if (Auth::user()->role->name === $roleName) {
             return response([

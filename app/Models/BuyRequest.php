@@ -18,37 +18,37 @@ class BuyRequest extends Model
         'is_auction' => 'boolean',
     ];
 
-    public function currency()
+    public function currency(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Currency::class);
     }
 
-    public function production_type()
+    public function production_type(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(ProductionType::class);
     }
 
-    public function payment_method()
+    public function payment_method(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(PaymentMethod::class);
     }
 
-    public function user()
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function documents()
+    public function documents(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(BuyRequestDocument::class);
     }
 
-    public function responses()
+    public function responses(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(BuyResponse::class);
     }
 
-    public function getPricesAttribute()
+    public function getPricesAttribute(): float|int
     {
         return $this->price*$this->currency->rubs;
     }

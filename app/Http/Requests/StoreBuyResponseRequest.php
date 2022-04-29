@@ -1,9 +1,8 @@
-<?php
+<?php /** @noinspection PhpArrayShapeAttributeCanBeAddedInspection */
 
 namespace App\Http\Requests;
 
 use App\Models\BuyRequest;
-use App\Models\BuyResponse;
 use App\Models\Currency;
 use App\Models\PaymentMethod;
 use Illuminate\Validation\Rule;
@@ -15,7 +14,7 @@ class StoreBuyResponseRequest extends ApiRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -25,7 +24,7 @@ class StoreBuyResponseRequest extends ApiRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             "buy_request_id" => [
