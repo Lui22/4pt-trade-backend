@@ -1,6 +1,6 @@
 # 4pt trade backend ![laravel-badge](https://img.shields.io/badge/made%20with-laravel-orange?style=flat-square&logo=laravel&color=FF2D20&labelColor=FFFFFF)
 
-Апи с Брянского хакатона
+Апи с Брянского хакатона, написанный за 3 дня.
 
 [Задание](https://docs.google.com/document/d/1Rf_gbUyfV_TdG60hW5K_GWoCGSTjWjAjubkM16CsL3k/edit)
 
