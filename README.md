@@ -8,7 +8,7 @@
  
 ## Фронтенд ![svelte-badge](https://img.shields.io/badge/made%20with-svelte-orange?style=flat-square&logo=svelte&color=FF3E00&labelColor=FFFFFF)
 
-* [Посмотреть](https://chrt.ddns.net/4pt-trade/)
+* ~~[Посмотреть](https://chrt.ddns.net/4pt-trade/)~~ временно упало
 
  |Логин |Пароль  | Роль в системе|
  --- | --- | ---|
